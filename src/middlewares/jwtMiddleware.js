@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const jwtKey = process.env.JWT_KEY;
+require('dotenv').config();
 
 exports.verifyToken = async (req, res, next) => {
     try{
@@ -8,7 +9,7 @@ exports.verifyToken = async (req, res, next) => {
 
         if(token !== undefined) {
             const payload = await new Promise((resolve, reject) =>{
-                jwt.verify(token, jwtKey, (error, decoded) => {
+                jwt.verify(token, process.env.JWT_KEY, (error, decoded) => {
                     if(error) {
                         reject(error);
                     } else {

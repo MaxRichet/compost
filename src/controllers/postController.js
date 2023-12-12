@@ -48,10 +48,10 @@ exports.createAPost = async (req, res) => {
         }
 
         let post = await newPost.save();
-        res.statut(201).json(post);
+        res.status(201).json(post);
     } catch (error) {
         console.error(error);
-        res.statut(401).json({message: "requete invalide."});
+        res.status(401).json({message: "requete invalide."});
     }
 }
 
