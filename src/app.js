@@ -10,11 +10,11 @@ app.use(express.urlencoded());
 app.use(express.json());
 
 const postRoute = require(`./routes/postRoute`);
-app.use('/posts', postRoute);
-
 const comRoute = require(`./routes/comRoute`);
-app.use('/', comRoute);
+const userRoute = require(`./routes/userRoute`);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-});
+app.use('/posts', postRoute);
+app.use('/', comRoute);
+app.use('/', userRoute);
+
+app.listen(port, hostname);

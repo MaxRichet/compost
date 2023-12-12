@@ -1,4 +1,5 @@
 const Post = require('../models/postModels');
+const textApiProvider = require("../providers/textApiProvider.js");
 
 exports.listAllPosts = async (req, res) => {
     // ES6
@@ -26,15 +27,31 @@ exports.listAllPosts = async (req, res) => {
 }
 
 exports.createAPost = async (req, res) => {
-    const newPost = new Post(req.body);
+    // const newPost = new Post(req.body);
+
+    // try {
+    //     const post = await newPost.save();
+    //     res.status(201);
+    //     res.json(post);
+    // } catch (error) {
+    //     res.status(500);
+    //     res.json({message: 'Erreur serveur'});
+    // }
 
     try {
-        const post = await newPost.save();
-        res.status(201);
-        res.json(post);
+        let newPost = new Post(req.body);
+        let randomTextPromise = textApiProvider.getRandomText();
+        let response = await randomTextPromise;
+
+        if(!newPost.content) {
+            newPost.content  = response;
+        }
+
+        let post = await newPost.save();
+        res.statut(201).json(post);
     } catch (error) {
-        res.status(500);
-        res.json({message: 'Erreur serveur'});
+        console.error(error);
+        res.statut(401).json({message: "requete invalide."});
     }
 }
 
